@@ -11,7 +11,14 @@
       "badge": "Best Value",
       "badgeType": "gold",
       "priority": 1,
-      "features": ["Gemini 1.5 Pro", "1M+ Context Window", "Deep Research AI", "Gemini Live Voice", "Advanced Coding Canvas", "Deep Think Reasoning"],
+      "features": [
+        "Gemini 1.5 Pro",
+        "1M+ Context Window",
+        "Deep Research AI",
+        "Gemini Live Voice",
+        "Advanced Coding Canvas",
+        "Deep Think Reasoning"
+      ],
       "stock": null,
       "available": true
     },
@@ -26,7 +33,14 @@
       "badge": "Popular",
       "badgeType": "blue",
       "priority": 2,
-      "features": ["Gemini 1.5 Pro", "1M+ Context Window", "Deep Research AI", "Gemini Live Voice", "Advanced Coding Canvas", "Deep Think Reasoning"],
+      "features": [
+        "Gemini 1.5 Pro",
+        "1M+ Context Window",
+        "Deep Research AI",
+        "Gemini Live Voice",
+        "Advanced Coding Canvas",
+        "Deep Think Reasoning"
+      ],
       "stock": null,
       "available": true
     },
@@ -41,7 +55,14 @@
       "badge": "Starter",
       "badgeType": "green",
       "priority": 3,
-      "features": ["Gemini 1.5 Pro", "1M+ Context Window", "Deep Research AI", "Gemini Live Voice", "Advanced Coding Canvas", "Deep Think Reasoning"],
+      "features": [
+        "Gemini 1.5 Pro",
+        "1M+ Context Window",
+        "Deep Research AI",
+        "Gemini Live Voice",
+        "Advanced Coding Canvas",
+        "Deep Think Reasoning"
+      ],
       "stock": null,
       "available": true
     },
@@ -56,7 +77,14 @@
       "badge": "Budget Pick",
       "badgeType": "green",
       "priority": 4,
-      "features": ["GPT-5 Architecture", "Codex Programming", "DALL-E 3 Ultra", "Advanced Data Analytics", "Real-time Web Search", "Vision Multimodal"],
+      "features": [
+        "GPT-5 Architecture",
+        "Codex Programming",
+        "DALL-E 3 Ultra",
+        "Advanced Data Analytics",
+        "Real-time Web Search",
+        "Vision Multimodal"
+      ],
       "stock": null,
       "available": true
     },
@@ -71,7 +99,14 @@
       "badge": "Recommended",
       "badgeType": "blue",
       "priority": 5,
-      "features": ["GPT-5 Architecture", "Codex Programming", "DALL-E 3 Ultra", "Advanced Data Analytics", "Real-time Web Search", "Vision Multimodal"],
+      "features": [
+        "GPT-5 Architecture",
+        "Codex Programming",
+        "DALL-E 3 Ultra",
+        "Advanced Data Analytics",
+        "Real-time Web Search",
+        "Vision Multimodal"
+      ],
       "stock": null,
       "available": true
     },
@@ -86,7 +121,14 @@
       "badge": "Premium",
       "badgeType": "gold",
       "priority": 6,
-      "features": ["GPT-5 Architecture", "Codex Programming", "DALL-E 3 Ultra", "Advanced Data Analytics", "Real-time Web Search", "Vision Multimodal"],
+      "features": [
+        "GPT-5 Architecture",
+        "Codex Programming",
+        "DALL-E 3 Ultra",
+        "Advanced Data Analytics",
+        "Real-time Web Search",
+        "Vision Multimodal"
+      ],
       "stock": null,
       "available": true
     },
@@ -101,7 +143,14 @@
       "badge": "Hot",
       "badgeType": "red",
       "priority": 7,
-      "features": ["Advanced AI Editing", "Pro Visual Effects", "Auto Captions Pro", "Cloud Storage 100GB", "No Watermark", "4K 60FPS Export"],
+      "features": [
+        "Advanced AI Editing",
+        "Pro Visual Effects",
+        "Auto Captions Pro",
+        "Cloud Storage 100GB",
+        "No Watermark",
+        "4K 60FPS Export"
+      ],
       "stock": null,
       "available": true
     },
@@ -116,7 +165,14 @@
       "badge": "New",
       "badgeType": "blue",
       "priority": 8,
-      "features": ["Advanced AI Editing", "Pro Visual Effects", "Auto Captions Pro", "Cloud Storage 100GB", "No Watermark", "4K 60FPS Export"],
+      "features": [
+        "Advanced AI Editing",
+        "Pro Visual Effects",
+        "Auto Captions Pro",
+        "Cloud Storage 100GB",
+        "No Watermark",
+        "4K 60FPS Export"
+      ],
       "stock": null,
       "available": true
     },
@@ -131,17 +187,49 @@
       "badge": "Creative",
       "badgeType": "purple",
       "priority": 9,
-      "features": ["Magic Studio AI", "100M+ Premium Assets", "Brand Kit Pro", "Background Remover", "Magic Animate Remover", "Content Planner"],
+      "features": [
+        "Magic Studio AI",
+        "100M+ Premium Assets",
+        "Brand Kit Pro",
+        "Background Remover",
+        "Magic Animate Remover",
+        "Content Planner"
+      ],
       "stock": null,
       "available": true
     }
   ],
   "categories": [
-    { "id": "all",       "name": "All Products",  "icon": "🌐", "priority": 0 },
-    { "id": "google-ai", "name": "Google AI",     "icon": "✨", "priority": 1 },
-    { "id": "chatgpt",   "name": "ChatGPT Plus",  "icon": "🤖", "priority": 2 },
-    { "id": "capcut",    "name": "CapCut Premium","icon": "🎬", "priority": 3 },
-    { "id": "canva",     "name": "Canva Pro",     "icon": "🎨", "priority": 4 }
+    {
+      "id": "all",
+      "name": "All Products",
+      "icon": "🌐",
+      "priority": 0
+    },
+    {
+      "id": "google-ai",
+      "name": "Google AI",
+      "icon": "✨",
+      "priority": 1
+    },
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT Plus",
+      "icon": "🤖",
+      "priority": 2
+    },
+    {
+      "id": "capcut",
+      "name": "CapCut Premium",
+      "icon": "🎬",
+      "priority": 3
+    },
+    {
+      "id": "canva",
+      "name": "Canva Pro",
+      "icon": "🎨",
+      "priority": 4
+    }
   ],
   "settings": {
     "messengerLink": "https://m.me/aerosync.bd",
