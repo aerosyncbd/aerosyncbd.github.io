@@ -60,7 +60,7 @@ const AEROSYNC_PRODUCTS = [
     priority: 4,
     features: ["GPT-5 Architecture", "Codex Programming", "DALL-E 3 Ultra", "Advanced Data Analytics", "Real-time Web Search", "Vision Multimodal"],
     totalSales: null,
-    available: true
+    available: false
   },
   {
     id: "chatgpt-ownmail",
@@ -75,7 +75,7 @@ const AEROSYNC_PRODUCTS = [
     priority: 5,
     features: ["GPT-5 Architecture", "Codex Programming", "DALL-E 3 Ultra", "Advanced Data Analytics", "Real-time Web Search", "Vision Multimodal"],
     totalSales: null,
-    available: true
+    available: false
   },
   {
     id: "chatgpt-personal",
@@ -90,7 +90,7 @@ const AEROSYNC_PRODUCTS = [
     priority: 6,
     features: ["GPT-5 Architecture", "Codex Programming", "DALL-E 3 Ultra", "Advanced Data Analytics", "Real-time Web Search", "Vision Multimodal"],
     totalSales: null,
-    available: true
+    available: false
   },
   {
     id: "capcut-purple",
