@@ -881,14 +881,14 @@ scheduleReview();
 
 /* ── toasts ── */
 const AVA_BG = ['#3a6b4a','#2d5c40','#4a7a5a','#253D2C','#3d6b4a','#2a5038'];
-let tIdx=0;
 function showToast(){
   const avail = products.filter(p=>p.available!==false&&(!p.stock||p.stock>0));
   if(!avail.length) return;
-  const p = avail[tIdx%avail.length]; tIdx++;
-  const name = NAMES[tIdx%NAMES.length];
+  // Fully random — different every time, different every page load
+  const p    = avail[Math.floor(Math.random() * avail.length)];
+  const name = NAMES[Math.floor(Math.random() * NAMES.length)];
   const init = name.split(' ').map(w=>w[0]).join('');
-  const bg = AVA_BG[tIdx%AVA_BG.length];
+  const bg   = AVA_BG[Math.floor(Math.random() * AVA_BG.length)];
   const zone = $('#toastZone');
   const t = document.createElement('div');
   t.className='toast'; t.setAttribute('role','alert');
