@@ -85,7 +85,7 @@
         "Real-time Web Search",
         "Vision Multimodal"
       ],
-      "stock": null,
+      "stock": 0,
       "available": true
     },
     {
@@ -107,7 +107,7 @@
         "Real-time Web Search",
         "Vision Multimodal"
       ],
-      "stock": null,
+      "stock": 0,
       "available": true
     },
     {
@@ -129,7 +129,7 @@
         "Real-time Web Search",
         "Vision Multimodal"
       ],
-      "stock": null,
+      "stock": 0,
       "available": true
     },
     {
@@ -151,7 +151,7 @@
         "No Watermark",
         "4K 60FPS Export"
       ],
-      "stock": null,
+      "stock": 0,
       "available": true
     },
     {
@@ -173,7 +173,7 @@
         "No Watermark",
         "4K 60FPS Export"
       ],
-      "stock": null,
+      "stock": 0,
       "available": true
     },
     {
@@ -195,7 +195,7 @@
         "Magic Animate Remover",
         "Content Planner"
       ],
-      "stock": null,
+      "stock": 0,
       "available": true
     }
   ],
