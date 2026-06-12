@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AeroSync BD — Premium AI Subscriptions</title>
+<meta name="description" content="Bangladesh's most trusted premium AI subscription shop. Google AI Pro, ChatGPT Plus, CapCut & Canva Pro at the best prices, delivered via Messenger."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --mint:     #CFFFDC;
+  --green:    #68BA7F;
+  --forest:   #253D2C;
+
+  /* derived */
+  --mint-10:  rgba(207,255,220,0.10);
+  --mint-15:  rgba(207,255,220,0.15);
+  --mint-20:  rgba(207,255,220,0.20);
+  --green-15: rgba(104,186,127,0.15);
+  --green-25: rgba(104,186,127,0.25);
+  --green-40: rgba(104,186,127,0.40);
+
+  --ease:   cubic-bezier(0.4,0,0.2,1);
+  --spring: cubic-bezier(0.22,1,0.36,1);
+}
+
+/* DARK */
+[data-theme="dark"] {
+  --bg:       #0f1a12;
+  --surface:  #162019;
+  --raised:   #1c2820;
+  --line:     rgba(207,255,220,0.08);
+  --line-hi:  rgba(207,255,220,0.14);
+  --t1:       #CFFFDC;
+  --t2:       rgba(207,255,220,0.55);
+  --t3:       rgba(207,255,220,0.28);
+  --btn-txt:  #0f1a12;
+}
+
+/* LIGHT */
+[data-theme="light"] {
+  --bg:       #f4fbf6;
+  --surface:  #ffffff;
+  --raised:   #eaf5ee;
+  --line:     rgba(37,61,44,0.09);
+  --line-hi:  rgba(37,61,44,0.18);
+  --t1:       #253D2C;
+  --t2:       rgba(37,61,44,0.60);
+  --t3:       rgba(37,61,44,0.35);
+  --btn-txt:  #ffffff;
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  background:var(--bg);color:var(--t1);
+  min-height:100vh;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+img{display:block;max-width:100%}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:100;
+  height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(16px,4vw,56px);
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+  transition:background .4s var(--ease);
+}
+.nav.scrolled{background:var(--surface);border-bottom-color:var(--line-hi)}
+
+.brand{display:flex;align-items:center;gap:9px}
+.brand-logo{width:30px;height:30px;border-radius:7px;object-fit:cover;border:1px solid var(--line-hi)}
+.brand-name{font-size:.92rem;font-weight:700;letter-spacing:-.02em;color:var(--t1)}
+.brand-name b{color:var(--green);font-weight:800}
+
+.nav-tabs{display:flex;gap:1px}
+.nav-tab{
+  padding:6px 13px;border-radius:7px;
+  font-size:.8rem;font-weight:600;color:var(--t2);
+  transition:all .18s var(--ease);
+}
+.nav-tab:hover{color:var(--t1);background:var(--line)}
+.nav-tab.on{color:var(--green);background:var(--green-15)}
+
+.nav-right{display:flex;align-items:center;gap:8px}
+
+/* theme toggle */
+.t-toggle{
+  width:48px;height:26px;border-radius:99px;
+  background:var(--raised);border:1px solid var(--line-hi);
+  position:relative;flex-shrink:0;transition:all .3s;
+}
+.t-knob{
+  position:absolute;top:3px;left:3px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--green);
+  transition:transform .35s var(--spring);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;line-height:1;
+}
+[data-theme="dark"] .t-knob{transform:translateX(22px)}
+
+.btn-nav{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 16px;border-radius:8px;
+  background:var(--green);color:var(--btn-txt);
+  font-size:.8rem;font-weight:700;
+  transition:all .2s var(--spring);
+}
+.btn-nav:hover{background:var(--mint);color:#253D2C;transform:translateY(-1px)}
+
+@media(max-width:720px){.nav-tabs{display:none}}
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero{
+  padding:clamp(72px,12vh,120px) clamp(16px,5vw,64px) clamp(56px,8vh,88px);
+  max-width:820px;margin:0 auto;text-align:center;
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 13px;border-radius:99px;
+  border:1px solid var(--line-hi);background:var(--green-15);
+  font-size:.72rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--green);
+  margin-bottom:24px;
+  animation:up .6s var(--spring) both;
+}
+.hero-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+
+.hero-h1{
+  font-size:clamp(2.4rem,6.5vw,4.8rem);
+  font-weight:800;letter-spacing:-.035em;line-height:1.06;
+  color:var(--t1);margin-bottom:20px;
+  animation:up .65s .06s var(--spring) both;
+}
+.hero-h1 em{color:var(--green);font-style:normal}
+
+.hero-p{
+  font-size:clamp(.9rem,1.8vw,1.08rem);
+  color:var(--t2);line-height:1.75;
+  max-width:520px;margin:0 auto 36px;font-weight:400;
+  animation:up .7s .12s var(--spring) both;
+}
+
+.hero-btns{
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+  animation:up .75s .18s var(--spring) both;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 26px;border-radius:9px;
+  background:var(--green);color:var(--btn-txt);
+  font-size:.88rem;font-weight:700;
+  transition:all .22s var(--spring);
+}
+.btn-primary:hover{background:var(--mint);color:#253D2C;transform:translateY(-2px)}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:9px;
+  border:1px solid var(--line-hi);color:var(--t2);
+  font-size:.88rem;font-weight:600;
+  transition:all .2s var(--ease);
+}
+.btn-outline:hover{color:var(--t1);border-color:var(--green-40);background:var(--green-15)}
+
+.hero-nums{
+  display:flex;justify-content:center;gap:clamp(20px,5vw,60px);flex-wrap:wrap;
+  margin-top:52px;padding-top:36px;border-top:1px solid var(--line);
+  animation:up .8s .24s var(--spring) both;
+}
+.num-item{text-align:center}
+.num-val{font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:800;letter-spacing:-.04em;color:var(--t1)}
+.num-val span{color:var(--green)}
+.num-lbl{font-size:.72rem;color:var(--t3);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-top:3px}
+
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ─────────────────────────────────────────
+   TICKER
+───────────────────────────────────────── */
+.ticker-bar{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:var(--surface);height:42px;
+  display:flex;align-items:center;overflow:hidden;
+}
+.ticker-label{
+  flex-shrink:0;padding:0 16px;height:100%;
+  border-right:1px solid var(--line);
+  display:flex;align-items:center;gap:7px;
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--t3);white-space:nowrap;
+}
+.t-live{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+.ticker-track{flex:1;overflow:hidden}
+.ticker-inner{
+  display:flex;align-items:center;height:42px;
+  animation:scroll 50s linear infinite;
+  white-space:nowrap;
+}
+.ticker-inner:hover{animation-play-state:paused}
+.t-item{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:0 28px;border-right:1px solid var(--line);
+  font-size:.77rem;color:var(--t2);height:42px;flex-shrink:0;
+}
+.t-item strong{color:var(--t1);font-weight:600}
+.t-item .t-price{color:var(--green);font-weight:700}
+.t-item .t-ago{color:var(--t3);font-size:.7rem}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ─────────────────────────────────────────
+   CATEGORY PILLS
+───────────────────────────────────────── */
+.cat-wrap{padding:24px clamp(16px,4vw,56px) 0}
+.cat-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.cat-row::-webkit-scrollbar{display:none}
+.cat-pill{
+  flex-shrink:0;display:flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:8px;
+  border:1px solid var(--line);background:var(--surface);
+  color:var(--t2);font-size:.8rem;font-weight:600;
+  transition:all .18s var(--ease);white-space:nowrap;
+}
+.cat-pill:hover{color:var(--t1);border-color:var(--line-hi)}
+.cat-pill.on{background:var(--green-15);border-color:var(--green-40);color:var(--green)}
+
+/* ─────────────────────────────────────────
+   PRODUCTS
+───────────────────────────────────────── */
+.products{padding:20px clamp(16px,4vw,56px) 72px}
+.products-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:20px;
+}
+.products-title{font-size:1.15rem;font-weight:700;letter-spacing:-.02em}
+.products-ct{font-size:.75rem;color:var(--t3);font-weight:500}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+
+/* CARD */
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;
+  transition:border-color .2s var(--ease),transform .25s var(--spring);
+  animation:up .45s var(--spring) both;
+}
+.card:hover{
+  border-color:var(--line-hi);
+  transform:translateY(-4px);
+}
+
+.card-img{position:relative;height:195px;background:var(--raised);overflow:hidden}
+.card-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s var(--spring);
+}
+.card:hover .card-img img{transform:scale(1.03)}
+.card-img-grad{display:none}
+.card-badge{
+  position:absolute;top:11px;left:11px;
+  padding:3px 9px;border-radius:5px;
+  font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid;backdrop-filter:blur(6px);
+}
+.badge-green {background:rgba(104,186,127,.18);color:#68BA7F;border-color:rgba(104,186,127,.3)}
+.badge-mint  {background:rgba(207,255,220,.15);color:#CFFFDC;border-color:rgba(207,255,220,.3)}
+.badge-forest{background:rgba(37,61,44,.6);color:#CFFFDC;border-color:rgba(207,255,220,.2)}
+
+.card-sold-out .card-img img{filter:grayscale(.6) brightness(.7)}
+.card-oos-tag{
+  position:absolute;top:11px;right:11px;
+  padding:3px 9px;border-radius:5px;
+  background:rgba(0,0,0,.6);color:rgba(255,255,255,.7);
+  font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.1);
+}
+
+.card-body{padding:16px 18px 18px}
+.card-name{font-size:.95rem;font-weight:700;letter-spacing:-.02em;color:var(--t1)}
+.card-sub{font-size:.75rem;color:var(--t3);margin-top:2px;font-weight:500}
+
+.card-chips{display:flex;gap:6px;flex-wrap:wrap;margin:11px 0}
+.chip{
+  display:flex;align-items:center;gap:5px;
+  padding:3px 9px;border-radius:5px;
+  font-size:.7rem;font-weight:600;
+  border:1px solid;
+}
+.chip-sold{background:var(--green-15);color:var(--green);border-color:rgba(104,186,127,.25)}
+.chip-last{background:var(--mint-10);color:var(--mint);border-color:rgba(207,255,220,.18)}
+.chip-stock{background:var(--mint-10);color:var(--t2);border-color:var(--line-hi)}
+.chip-low  {background:rgba(250,180,100,.12);color:#f0a040;border-color:rgba(250,180,100,.25)}
+
+.card-price{display:flex;align-items:baseline;gap:8px;margin:12px 0 10px}
+.price-now{font-size:1.65rem;font-weight:800;letter-spacing:-.04em;color:var(--t1)}
+.price-was{font-size:.85rem;color:var(--t3);text-decoration:line-through;font-weight:400}
+.price-pct{
+  padding:2px 7px;border-radius:5px;font-size:.68rem;font-weight:700;
+  background:var(--green-15);color:var(--green);border:1px solid rgba(104,186,127,.25);
+}
+
+.card-feats{display:flex;flex-direction:column;gap:3px;margin-bottom:14px}
+.feat{display:flex;align-items:center;gap:7px;font-size:.77rem;color:var(--t2)}
+.feat-dot{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+.card-cta{
+  width:100%;padding:11px;border-radius:8px;
+  background:var(--green);color:var(--btn-txt);
+  font-size:.85rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:all .2s var(--spring);
+}
+.card-cta:hover{background:var(--mint);color:#253D2C}
+.card-cta.oos{background:var(--raised);color:var(--t3);cursor:not-allowed}
+.card-cta.oos:hover{transform:none}
+
+/* ─────────────────────────────────────────
+   DIVIDER
+───────────────────────────────────────── */
+.divider{border:none;border-top:1px solid var(--line)}
+
+/* ─────────────────────────────────────────
+   TRUST ROW
+───────────────────────────────────────── */
+.trust{
+  display:flex;justify-content:center;gap:clamp(20px,4vw,56px);flex-wrap:wrap;
+  padding:32px clamp(16px,4vw,56px);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:var(--surface);
+}
+.trust-item{display:flex;align-items:center;gap:10px}
+.trust-ico{font-size:1.2rem}
+.trust-t{font-size:.82rem;font-weight:700;color:var(--t1)}
+.trust-s{font-size:.72rem;color:var(--t3);margin-top:1px}
+
+/* ─────────────────────────────────────────
+   STATS
+───────────────────────────────────────── */
+.stats-section{
+  padding:72px clamp(16px,4vw,56px);text-align:center;
+}
+.sec-eyebrow{
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--green);margin-bottom:10px;
+}
+.sec-title{
+  font-size:clamp(1.6rem,3.5vw,2.4rem);
+  font-weight:800;letter-spacing:-.03em;margin-bottom:8px;
+}
+.sec-sub{font-size:.88rem;color:var(--t2);margin-bottom:44px}
+
+.stats-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:12px;max-width:860px;margin:0 auto;
+}
+.stat-box{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:12px;padding:24px 18px;text-align:center;
+  transition:border-color .2s;
+}
+.stat-box:hover{border-color:var(--line-hi)}
+.stat-box-val{
+  font-size:2rem;font-weight:800;letter-spacing:-.04em;color:var(--t1);
+}
+.stat-box-val em{color:var(--green);font-style:normal}
+.stat-box-lbl{font-size:.7rem;color:var(--t3);font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
+
+/* ─────────────────────────────────────────
+   REVIEWS
+───────────────────────────────────────── */
+.reviews{
+  padding:72px clamp(16px,4vw,56px);
+  background:var(--surface);
+  border-top:1px solid var(--line);
+}
+.reviews-head{text-align:center;margin-bottom:44px}
+.stars{display:flex;align-items:center;justify-content:center;gap:3px;margin-bottom:5px}
+.star{color:#68BA7F;font-size:1.1rem}
+.star.half{opacity:.35}
+.rating-n{font-size:1.4rem;font-weight:800;margin-left:5px;letter-spacing:-.03em}
+.rating-ct{font-size:.78rem;color:var(--t3);margin-top:2px}
+
+.reviews-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:12px;max-width:1160px;margin:0 auto;
+}
+.review{
+  background:var(--raised);border:1px solid var(--line);
+  border-radius:12px;padding:20px;
+  transition:border-color .2s;
+  animation:up .45s var(--spring) both;
+}
+.review:hover{border-color:var(--line-hi)}
+.review.new{animation:newIn .5s var(--spring) both;border-color:var(--green-25)}
+@keyframes newIn{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:none}}
+
+.rv-top{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+.rv-ava{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:700;color:#0f1a12;
+}
+.rv-name{font-size:.85rem;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:6px}
+.rv-product{font-size:.7rem;color:var(--t3);margin-top:1px}
+.rv-stars{display:flex;gap:2px;margin-top:4px}
+.rv-star{color:#68BA7F;font-size:.77rem}
+.rv-dim{opacity:.25}
+.verified{
+  display:inline-flex;align-items:center;gap:3px;
+  padding:1px 7px;border-radius:4px;
+  background:var(--green-15);color:var(--green);
+  font-size:.62rem;font-weight:700;border:1px solid rgba(104,186,127,.25);
+}
+.rv-text{font-size:.81rem;line-height:1.72;color:var(--t2);margin-bottom:10px}
+.rv-foot{display:flex;justify-content:space-between;align-items:center}
+.rv-time{font-size:.68rem;color:var(--t3)}
+.rv-helpful{font-size:.68rem;color:var(--t3);display:flex;align-items:center;gap:4px}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer{
+  border-top:1px solid var(--line);
+  padding:44px clamp(16px,4vw,56px) 28px;
+  text-align:center;
+}
+.footer-brand{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:12px}
+.footer-desc{font-size:.8rem;color:var(--t3);max-width:420px;margin:0 auto 20px;line-height:1.8}
+.footer-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.footer-link{font-size:.78rem;color:var(--t2);font-weight:500;transition:color .18s}
+.footer-link:hover{color:var(--green)}
+.footer-copy{font-size:.7rem;color:var(--t3)}
+
+/* ─────────────────────────────────────────
+   TOASTS
+───────────────────────────────────────── */
+.toast-zone{
+  position:fixed;bottom:20px;left:20px;z-index:9999;
+  display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none;
+}
+.toast{
+  display:flex;align-items:center;gap:10px;
+  background:var(--surface);border:1px solid var(--line-hi);
+  border-radius:11px;padding:11px 15px;
+  max-width:290px;pointer-events:all;
+  animation:tIn .38s var(--spring) forwards;
+  /* no box-shadow on purpose */
+}
+.toast.out{animation:tOut .25s var(--ease) forwards}
+@keyframes tIn{from{opacity:0;transform:translateX(-20px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes tOut{from{opacity:1}to{opacity:0;transform:translateX(-12px)}}
+.toast-ava{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;color:#0f1a12;
+}
+.toast-title{font-size:.76rem;font-weight:700;color:var(--t1)}
+.toast-desc{font-size:.68rem;color:var(--t2);margin-top:1px}
+
+/* ─────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--raised);border-radius:2px}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media(max-width:480px){
+  .grid{grid-template-columns:1fr}
+  .toast-zone{left:10px;bottom:10px}
+  .toast{max-width:calc(100vw - 20px)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="#" class="brand" id="home-link">
+    <img src="products/logo.png" alt="AeroSync BD" class="brand-logo"/>
+    <span class="brand-name">Aero<b>Sync</b> BD</span>
+  </a>
+
+  <div class="nav-tabs" id="navTabs" role="tablist"></div>
+
+  <div class="nav-right">
+    <button class="t-toggle" id="themeBtn" aria-label="Toggle theme">
+      <div class="t-knob" id="themeKnob">☀️</div>
+    </button>
+    <a href="https://m.me/aerosync.bd" target="_blank" rel="noopener" class="btn-nav" id="nav-order">
+      Order on Messenger
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-h1">
+  <div class="hero-pill"><span class="hero-dot"></span>Bangladesh's #1 AI Subscription Shop</div>
+  <h1 class="hero-h1" id="hero-h1">Premium AI Tools<br/><em>for Everyone</em></h1>
+  <p class="hero-p">Google AI Pro, ChatGPT Plus, CapCut & Canva Pro subscriptions delivered instantly via Messenger. Genuine. Fast. Affordable.</p>
+  <div class="hero-btns">
+    <a href="https://m.me/aerosync.bd" target="_blank" rel="noopener" class="btn-primary" id="hero-order">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.08 2 11.2c0 3.12 1.6 5.9 4.1 7.7V22l3.7-2.1c.7.2 1.4.3 2.2.3 5.52 0 10-4.08 10-9.2S17.52 2 12 2zm1 12.4l-2.6-2.7-5 2.7 5.4-5.7 2.6 2.7 5-2.7-5.4 5.7z"/></svg>
+      Order on Messenger
+    </a>
+    <a href="#products-section" class="btn-outline" id="hero-browse">Browse Products</a>
+  </div>
+  <div class="hero-nums" id="heroNums"></div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-bar" role="marquee" aria-label="Recent orders">
+  <div class="ticker-label"><span class="t-live"></span> Live Orders</div>
+  <div class="ticker-track">
+    <div class="ticker-inner" id="tickerInner" aria-hidden="true"></div>
+  </div>
+</div>
+
+<!-- CATEGORY PILLS -->
+<div class="cat-wrap" aria-label="Filter by category">
+  <div class="cat-row" id="catRow" role="tablist"></div>
+</div>
+
+<!-- PRODUCTS -->
+<main class="products" id="products-section" aria-labelledby="products-hdr">
+  <div class="products-head">
+    <h2 class="products-title" id="products-hdr">Available Now</h2>
+    <span class="products-ct" id="prodCount"></span>
+  </div>
+  <div class="grid" id="grid" role="list"></div>
+</main>
+
+<!-- TRUST -->
+<div class="trust" role="list" aria-label="Guarantees">
+  <div class="trust-item" role="listitem">
+    <span class="trust-ico">⚡</span>
+    <div><div class="trust-t">Instant Delivery</div><div class="trust-s">Via Messenger</div></div>
+  </div>
+  <div class="trust-item" role="listitem">
+    <span class="trust-ico">✅</span>
+    <div><div class="trust-t">100% Genuine</div><div class="trust-s">Verified accounts only</div></div>
+  </div>
+  <div class="trust-item" role="listitem">
+    <span class="trust-ico">🔄</span>
+    <div><div class="trust-t">Replacement Policy</div><div class="trust-s">If any issue arises</div></div>
+  </div>
+  <div class="trust-item" role="listitem">
+    <span class="trust-ico">💬</span>
+    <div><div class="trust-t">24/7 Support</div><div class="trust-s">Always reachable</div></div>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats-section" aria-labelledby="stats-h">
+  <div class="sec-eyebrow">By the numbers</div>
+  <h2 class="sec-title" id="stats-h">Our Track Record</h2>
+  <p class="sec-sub">Growing since June 10, 2026</p>
+  <div class="stats-grid" id="statsGrid"></div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" aria-labelledby="reviews-h">
+  <div class="reviews-head">
+    <div class="sec-eyebrow">Customer Reviews</div>
+    <h2 class="sec-title" id="reviews-h">What People Say</h2>
+    <div class="stars">
+      <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      <span class="star">★</span><span class="star half">★</span>
+      <span class="rating-n">4.9</span>
+    </div>
+    <div class="rating-ct" id="ratingCt"></div>
+  </div>
+  <div class="reviews-grid" id="reviewsGrid" role="list"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <img src="products/logo.png" alt="" style="width:26px;height:26px;border-radius:6px;border:1px solid var(--line-hi)" aria-hidden="true"/>
+    <span style="font-size:.9rem;font-weight:700">AeroSync BD</span>
+  </div>
+  <p class="footer-desc">Bangladesh's most trusted AI subscription service. Genuine accounts, instant delivery, best prices guaranteed.</p>
+  <div class="footer-links">
+    <a href="https://m.me/aerosync.bd" target="_blank" rel="noopener" class="footer-link">Messenger</a>
+    <a href="#products-section" class="footer-link">Products</a>
+    <a href="#reviews-h" class="footer-link">Reviews</a>
+    <a href="admin.html" class="footer-link">Admin</a>
+  </div>
+  <p class="footer-copy">© 2026 AeroSync BD. All rights reserved.</p>
+</footer>
+
+<!-- TOASTS -->
+<div class="toast-zone" id="toastZone" aria-live="polite"></div>
+
+<script>
+/* ── helpers ── */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const qs = str => { let h=0; for(let i=0;i<str.length;i++) h=(h*31+str.charCodeAt(i))>>>0; return h; };
+const sr = (s,i=0) => { let x=Math.sin(s*9301+i*49297+233)*10000; return x-Math.floor(x); };
+
+/* ── theme ── */
+const html = document.documentElement;
+function applyTheme(t){
+  html.dataset.theme = t;
+  localStorage.setItem('theme', t);
+  $('#themeKnob').textContent = t==='dark' ? '🌙' : '☀️';
+}
+(function(){
+  const saved = localStorage.getItem('theme');
+  const hr = new Date().getHours();
+  applyTheme(saved || (hr>=6&&hr<18?'light':'dark'));
+})();
+$('#themeBtn').onclick = () => {
+  localStorage.setItem('theme-manual','1');
+  applyTheme(html.dataset.theme==='dark'?'light':'dark');
+};
+setInterval(()=>{ if(!localStorage.getItem('theme-manual')){ const h=new Date().getHours(); applyTheme(h>=6&&h<18?'light':'dark'); } }, 60000);
+
+/* ── nav scroll ── */
+window.addEventListener('scroll',()=>$('#mainNav').classList.toggle('scrolled',scrollY>10),{passive:true});
+
+/* ── data (fetched from inventory.json — single source of truth) ── */
+let products   = [];
+let categories = [];
+let activeCat  = 'all';
+
+async function loadInventory(){
+  try {
+    const r = await fetch('inventory.json?_=' + Date.now());
+    if (!r.ok) throw new Error('fetch failed');
+    const data = await r.json();
+    products   = data.products   || [];
+    categories = data.categories || [];
+    // Apply settings if present
+    if (data.settings) {
+      const s = data.settings;
+      if (s.messengerLink) {
+        $$('a[href*="m.me"]').forEach(a => a.href = s.messengerLink);
+      }
+    }
+  } catch(e) {
+    console.warn('inventory.json load failed, site may be offline or file missing.', e);
+  }
+}
+
+/* ── sales ── */
+const LAUNCH = new Date('2026-06-10T00:00:00+06:00');
+function salesFor(id){
+  const s = qs(id);
+  const days = Math.max(0, Math.floor((Date.now()-LAUNCH)/86400000));
+  let total = 1;
+  for(let d=1;d<=days;d++) total += Math.floor(sr(s,d)*14)+1;
+  const mins = Math.floor(sr(s, days*3+11)*85)+3;
+  return {total, mins};
+}
+function fmtTime(m){ return m<60 ? `${m}m ago` : `${Math.floor(m/60)}h ago`; }
+function totalSales(){ return products.filter(p=>p.available!==false).reduce((s,p)=>s+salesFor(p.id).total, 0); }
+
+/* ── hero nums ── */
+function renderNums(){
+  const tot = totalSales();
+  const days = Math.max(1, Math.floor((Date.now()-LAUNCH)/86400000));
+  $('#heroNums').innerHTML = `
+    <div class="num-item"><div class="num-val"><span>${tot.toLocaleString()}</span>+</div><div class="num-lbl">Sold</div></div>
+    <div class="num-item"><div class="num-val"><span>${days}</span></div><div class="num-lbl">Days Active</div></div>
+    <div class="num-item"><div class="num-val"><span>${Math.floor(tot*.96).toLocaleString()}</span>+</div><div class="num-lbl">Happy Customers</div></div>
+    <div class="num-item"><div class="num-val"><span>4.9</span>★</div><div class="num-lbl">Rating</div></div>`;
+}
+renderNums();
+
+/* ── stats ── */
+function renderStats(){
+  const tot = totalSales();
+  const days = Math.max(1, Math.floor((Date.now()-LAUNCH)/86400000));
+  const minMins = Math.min(...products.filter(p=>p.available!==false).map(p=>salesFor(p.id).mins));
+  $('#statsGrid').innerHTML = `
+    <div class="stat-box"><div class="stat-box-val"><em>${tot.toLocaleString()}</em></div><div class="stat-box-lbl">Total Subscriptions Sold</div></div>
+    <div class="stat-box"><div class="stat-box-val"><em>${days}</em></div><div class="stat-box-lbl">Days Since Launch</div></div>
+    <div class="stat-box"><div class="stat-box-val"><em>${fmtTime(minMins)}</em></div><div class="stat-box-lbl">Most Recent Sale</div></div>
+    <div class="stat-box"><div class="stat-box-val"><em>4.9</em>/5</div><div class="stat-box-lbl">Average Rating</div></div>`;
+}
+renderStats();
+
+/* ── categories ── */
+function renderCats(){
+  const sorted = [...categories].sort((a,b)=>a.priority-b.priority);
+  const navEl  = $('#navTabs');
+  const catEl  = $('#catRow');
+  navEl.innerHTML = ''; catEl.innerHTML = '';
+  sorted.forEach(c=>{
+    const nb = document.createElement('button');
+    nb.className = 'nav-tab'+(c.id===activeCat?' on':'');
+    nb.textContent = c.name; nb.dataset.cat = c.id;
+    nb.setAttribute('role','tab'); nb.setAttribute('aria-selected', c.id===activeCat);
+    nb.onclick = ()=>{ activeCat=c.id; renderCats(); renderProducts(); };
+    navEl.appendChild(nb);
+
+    const cp = document.createElement('button');
+    cp.className = 'cat-pill'+(c.id===activeCat?' on':'');
+    cp.innerHTML = `<span aria-hidden="true">${c.icon}</span>${c.name}`;
+    cp.dataset.cat = c.id;
+    cp.setAttribute('role','tab'); cp.setAttribute('aria-selected', c.id===activeCat);
+    cp.onclick = ()=>{ activeCat=c.id; renderCats(); renderProducts(); };
+    catEl.appendChild(cp);
+  });
+}
+
+/* ── stock label ── */
+function stockChip(stock){
+  if(stock==null) return null;
+  if(stock<=0)  return {html:`<div class="chip chip-low">Out of Stock</div>`, oos:true};
+  if(stock<=3)  return {html:`<div class="chip chip-low">⚠ ${stock} left</div>`, oos:false};
+  return {html:`<div class="chip chip-stock">${stock} in stock</div>`, oos:false};
+}
+
+/* ── products ── */
+function renderProducts(){
+  let list = products.filter(p=>p.available!==false);
+  if(activeCat!=='all') list = list.filter(p=>p.category===activeCat);
+  list.sort((a,b)=>(a.priority||99)-(b.priority||99));
+
+  $('#prodCount').textContent = `${list.length} product${list.length!==1?'s':''}`;
+
+  if(!list.length){
+    $('#grid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:56px;font-size:.88rem;color:var(--t3)">No products in this category yet.</div>`;
+    return;
+  }
+
+  $('#grid').innerHTML = list.map((p,i)=>{
+    const {total,mins} = salesFor(p.id);
+    const disc = p.originalPrice ? Math.round((1-p.price/p.originalPrice)*100) : 0;
+    const feats = (p.features||[]).slice(0,4);
+    const sk = stockChip(p.stock);
+    const oos = sk && sk.oos;
+    const badgeClass = p.badgeType==='gold'?'badge-mint': p.badgeType==='blue'?'badge-forest':'badge-green';
+    return `
+<article class="card${oos?' card-sold-out':''}" role="listitem" style="animation-delay:${i*.05}s" data-id="${p.id}">
+  <div class="card-img">
+    <img src="${p.image}" alt="${p.name} — ${p.subtitle}" loading="${i<4?'eager':'lazy'}"/>
+    <div class="card-img-grad" aria-hidden="true"></div>
+    ${oos?`<div class="card-oos-tag">Out of Stock</div>`:''}
+    ${p.badge?`<div class="card-badge ${badgeClass}">${p.badge}</div>`:''}
+  </div>
+  <div class="card-body">
+    <div class="card-name">${p.name}</div>
+    <div class="card-sub">${p.subtitle}</div>
+    <div class="card-chips">
+      <div class="chip chip-sold">🔥 ${total.toLocaleString()} sold</div>
+      <div class="chip chip-last">⚡ ${fmtTime(mins)}</div>
+      ${sk?sk.html:''}
+    </div>
+    <div class="card-price">
+      <span class="price-now">৳${p.price.toLocaleString()}</span>
+      ${p.originalPrice?`<span class="price-was">৳${p.originalPrice.toLocaleString()}</span><span class="price-pct">${disc}% off</span>`:''}
+    </div>
+    ${feats.length?`<div class="card-feats">${feats.map(f=>`<div class="feat"><span class="feat-dot" aria-hidden="true"></span>${f}</div>`).join('')}</div>`:''}
+    ${oos
+      ?`<button class="card-cta oos" disabled aria-label="Out of stock">Out of Stock</button>`
+      :`<a href="https://m.me/aerosync.bd" target="_blank" rel="noopener"
+           class="card-cta" id="buy-${p.id}"
+           aria-label="Buy ${p.name} ${p.subtitle} for ৳${p.price}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.08 2 11.2c0 3.12 1.6 5.9 4.1 7.7V22l3.7-2.1c.7.2 1.4.3 2.2.3 5.52 0 10-4.08 10-9.2S17.52 2 12 2zm1 12.4l-2.6-2.7-5 2.7 5.4-5.7 2.6 2.7 5-2.7-5.4 5.7z"/></svg>
+          Order — ৳${p.price.toLocaleString()}
+        </a>`}
+  </div>
+</article>`;
+  }).join('');
+}
+
+/* ── ticker ── */
+const NAMES = ['Rahim K.','Sadia A.','Tanvir H.','Nusrat J.','Arafat M.','Riya C.','Fahim S.','Mim R.','Jubayer A.','Sumaiya B.','Omar F.','Tania N.','Rafiq U.','Laboni D.','Hasib K.','Farhan R.','Mitu S.','Sakib K.'];
+function buildTicker(){
+  const avail = products.filter(p=>p.available!==false);
+  const items = avail.map((p,i)=>{
+    const {mins} = salesFor(p.id);
+    const name = NAMES[(qs(p.id)+i)%NAMES.length];
+    return `<div class="t-item">
+      <strong>${name}</strong> ordered <strong>${p.name} ${p.subtitle}</strong>
+      <span class="t-price">৳${p.price.toLocaleString()}</span>
+      <span class="t-ago">${fmtTime(mins)}</span>
+    </div>`;
+  });
+  $('#tickerInner').innerHTML = [...items,...items].join('');
+}
+buildTicker();
+
+/* ── reviews ── */
+const REVIEW_POOL = [
+  {name:'Rahim Khan',    init:'RK',bg:'#3a6b4a',prod:'Google AI Pro 18M',     stars:5, text:'Ekdam perfect service! Activated in 10 minutes. AeroSync is the best AI shop in Bangladesh, no question.'},
+  {name:'Sadia Akter',  init:'SA',bg:'#2d5c40',prod:'ChatGPT Plus Personal',  stars:5, text:'Very trustworthy. My ChatGPT account arrived instantly and GPT-5 is amazing for my writing work.'},
+  {name:'Tanvir Hossain',init:'TH',bg:'#4a7a5a',prod:'CapCut Premium',        stars:5, text:'Best price in market! CapCut Pro is a game changer for editing. Delivery was super fast.'},
+  {name:'Nusrat Jahan', init:'NJ',bg:'#253D2C',prod:'Canva Pro',              stars:5, text:'Canva Pro transformed my design work completely. Delivered within minutes. 5 stars from me!'},
+  {name:'Arafat Mahmud',init:'AM',bg:'#3d6b4a',prod:'Google AI Pro 1 Year',   stars:5, text:'Was skeptical at first but they delivered exactly as promised. Gemini 1.5 Pro is incredible value!'},
+  {name:'Riya Chowdhury',init:'RC',bg:'#2a5038',prod:'ChatGPT Plus Shared',   stars:4, text:'Great service and fast response. Customer support was very helpful. Will buy again.'},
+  {name:'Fahim Siddiqui',init:'FS',bg:'#456a52',prod:'CapCut Premium',        stars:5, text:'4K export without watermark is a game changer. AeroSync is 100% legit. Highly recommended!'},
+  {name:'Laboni Das',   init:'LD',bg:'#2e5c3e',prod:'Canva Pro',              stars:5, text:'100M+ Canva assets for this price is insane value. Smooth process, will recommend to everyone!'},
+  {name:'Sakib Islam',  init:'SI',bg:'#3a6650',prod:'Google AI Pro 4 Month',  stars:5, text:'Tested 4 months first — absolutely genuine. Bought the 18M plan now. Full trust in AeroSync.'},
+  {name:'Priya Das',    init:'PD',bg:'#4a7a60',prod:'ChatGPT Plus Own Mail',  stars:5, text:'Own mail account means full control! Exactly what was promised. Perfect experience overall.'},
+  {name:'Farhan Rahman',init:'FR',bg:'#253D2C',prod:'Google AI Pro 18M',      stars:5, text:'Deep Research AI alone is worth the price. Got it in under 5 minutes. Very impressed!'},
+  {name:'Tania Nahar',  init:'TN',bg:'#3d6055',prod:'ChatGPT Plus Personal',  stars:4, text:'Works perfectly, no issues at all. Support replies faster than I expected. Good job AeroSync!'},
+  {name:'Hasib Karim',  init:'HK',bg:'#2d5440',prod:'Canva Pro',              stars:5, text:'Magic Studio AI + Brand Kit saved my agency so much time. Best investment this year.'},
+  {name:'Mitu Sarkar',  init:'MS',bg:'#4a7060',prod:'CapCut Premium',         stars:5, text:'Auto Captions Pro is saving me hours every week. Paid for itself on the very first day.'},
+  {name:'Jubayer Ahsan',init:'JA',bg:'#365a45',prod:'Google AI Pro 1 Year',   stars:5, text:'Gemini Live Voice is incredible for use in Bangladesh. 1 year for this price is unbeatable!'},
+];
+const TIMES = ['just now','2 min ago','7 min ago','14 min ago','31 min ago','52 min ago','1 hour ago','2 hours ago','4 hours ago','6 hours ago','yesterday','2 days ago'];
+const HELPFUL = [8,14,5,22,11,3,18,7,27,9,31,6];
+
+let visRev = [], poolIdx = 0;
+function pickRev(){ return REVIEW_POOL[poolIdx++ % REVIEW_POOL.length]; }
+
+function revHTML(r, ti, i, isNew=false){
+  const stars = Array(5).fill(0).map((_,x)=>`<span class="rv-star${x>=r.stars?' rv-dim':''}">★</span>`).join('');
+  return `<div class="review${isNew?' new':''}" role="listitem" style="animation-delay:${i*.04}s">
+    <div class="rv-top">
+      <div class="rv-ava" style="background:${r.bg}">${r.init}</div>
+      <div style="flex:1;min-width:0">
+        <div class="rv-name">${r.name}<span class="verified">✓ Verified</span></div>
+        <div class="rv-product">${r.prod}</div>
+        <div class="rv-stars">${stars}</div>
+      </div>
+    </div>
+    <p class="rv-text">${r.text}</p>
+    <div class="rv-foot">
+      <span class="rv-time">${TIMES[ti%TIMES.length]}</span>
+      <span class="rv-helpful">👍 ${HELPFUL[i%HELPFUL.length]} helpful</span>
+    </div>
+  </div>`;
+}
+
+function renderReviews(animate=false){
+  const tot = totalSales();
+  $('#ratingCt').textContent = `Based on ${Math.floor(tot*.38).toLocaleString()}+ verified purchases`;
+  $('#reviewsGrid').innerHTML = visRev.map((r,i)=>revHTML(r.data,r.ti,i,animate&&i===0)).join('');
+}
+
+function initReviews(){
+  for(let i=0;i<8;i++) visRev.push({data:pickRev(),ti:i+1});
+  renderReviews();
+}
+initReviews();
+
+function scheduleReview(){
+  setTimeout(()=>{
+    visRev.unshift({data:pickRev(),ti:0});
+    if(visRev.length>12) visRev.pop();
+    visRev.forEach((r,i)=>{ if(i>0) r.ti = Math.min(r.ti+1, TIMES.length-1); });
+    renderReviews(true);
+    scheduleReview();
+  }, 40000 + Math.random()*50000);
+}
+scheduleReview();
+
+/* ── toasts ── */
+const AVA_BG = ['#3a6b4a','#2d5c40','#4a7a5a','#253D2C','#3d6b4a','#2a5038'];
+let tIdx=0;
+function showToast(){
+  const avail = products.filter(p=>p.available!==false&&(!p.stock||p.stock>0));
+  if(!avail.length) return;
+  const p = avail[tIdx%avail.length]; tIdx++;
+  const name = NAMES[tIdx%NAMES.length];
+  const init = name.split(' ').map(w=>w[0]).join('');
+  const bg = AVA_BG[tIdx%AVA_BG.length];
+  const zone = $('#toastZone');
+  const t = document.createElement('div');
+  t.className='toast'; t.setAttribute('role','alert');
+  t.innerHTML=`
+    <div class="toast-ava" style="background:${bg}">${init}</div>
+    <div class="toast-body">
+      <div class="toast-title">${name} just ordered</div>
+      <div class="toast-desc">${p.name} ${p.subtitle} · ৳${p.price.toLocaleString()}</div>
+    </div>`;
+  zone.appendChild(t);
+  setTimeout(()=>{ t.classList.add('out'); setTimeout(()=>t.remove(),280); }, 5000);
+}
+setTimeout(()=>{ showToast(); setInterval(showToast, 22000+Math.random()*30000|0); }, 10000);
+
+/* ── init: load inventory then render everything ── */
+loadInventory().then(() => {
+  renderNums();
+  renderStats();
+  renderCats();
+  renderProducts();
+  buildTicker();
+  initReviews();
+  scheduleReview();
+});
+
+/* ── refresh every 5 minutes from inventory.json ── */
+setInterval(async () => {
+  await loadInventory();
+  renderNums(); renderStats(); renderProducts(); buildTicker();
+}, 5 * 60 * 1000);
+</script>
+</body>
+</html>

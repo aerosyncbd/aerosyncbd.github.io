@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AeroSync Admin</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ─── TOKENS ─── */
+:root{
+  --mint:  #CFFFDC;
+  --green: #68BA7F;
+  --forest:#253D2C;
+  --mint-10: rgba(207,255,220,.10);
+  --mint-15: rgba(207,255,220,.15);
+  --green-15:rgba(104,186,127,.15);
+  --green-25:rgba(104,186,127,.25);
+  --red:   #e06060;
+  --red-10:rgba(224,96,96,.12);
+  --red-30:rgba(224,96,96,.30);
+  --amber: #d4944a;
+  --amber-10:rgba(212,148,74,.12);
+  --spring:cubic-bezier(0.22,1,0.36,1);
+  --ease:  cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"]{
+  --bg:      #0f1a12;
+  --surface: #162019;
+  --raised:  #1c2820;
+  --card:    #1c2820;
+  --line:    rgba(207,255,220,.07);
+  --line-hi: rgba(207,255,220,.13);
+  --t1:      #CFFFDC;
+  --t2:      rgba(207,255,220,.55);
+  --t3:      rgba(207,255,220,.28);
+  --inp:     rgba(207,255,220,.04);
+  --btn-txt: #0f1a12;
+}
+[data-theme="light"]{
+  --bg:      #f4fbf6;
+  --surface: #ffffff;
+  --raised:  #eaf5ee;
+  --card:    #ffffff;
+  --line:    rgba(37,61,44,.08);
+  --line-hi: rgba(37,61,44,.16);
+  --t1:      #253D2C;
+  --t2:      rgba(37,61,44,.60);
+  --t3:      rgba(37,61,44,.35);
+  --inp:     rgba(37,61,44,.04);
+  --btn-txt: #ffffff;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  background:var(--bg);color:var(--t1);
+  min-height:100vh;-webkit-font-smoothing:antialiased;
+  transition:background .35s,color .35s;
+}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+img{display:block;max-width:100%}
+
+/* ─── LOGIN ─── */
+.login{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.login.gone{display:none}
+.login-box{
+  width:100%;max-width:360px;
+  background:var(--surface);border:1px solid var(--line-hi);
+  border-radius:16px;padding:32px;
+}
+.login-brand{display:flex;align-items:center;gap:9px;justify-content:center;margin-bottom:24px}
+.login-brand img{width:32px;height:32px;border-radius:7px;border:1px solid var(--line-hi)}
+.login-brand span{font-size:.95rem;font-weight:700;color:var(--t1)}
+.login-brand b{color:var(--green)}
+.login-title{font-size:1.25rem;font-weight:800;letter-spacing:-.025em;text-align:center;margin-bottom:5px}
+.login-sub{font-size:.78rem;color:var(--t3);text-align:center;margin-bottom:24px}
+.login-err{
+  display:flex;align-items:center;gap:7px;
+  padding:9px 13px;border-radius:8px;
+  background:var(--red-10);color:var(--red);
+  border:1px solid var(--red-30);
+  font-size:.78rem;font-weight:600;margin-bottom:13px;
+}
+.login-err.gone{display:none}
+.fld{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
+.fld label{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--t3)}
+.fld input{
+  background:var(--inp);border:1px solid var(--line-hi);border-radius:8px;
+  padding:11px 12px;color:var(--t1);font-family:inherit;font-size:.88rem;
+  outline:none;transition:border-color .18s;width:100%;
+}
+.fld input:focus{border-color:var(--green)}
+.login-btn{
+  width:100%;padding:12px;border-radius:8px;
+  background:var(--green);color:var(--btn-txt);
+  font-size:.88rem;font-weight:700;font-family:inherit;
+  transition:background .2s;margin-top:4px;
+}
+.login-btn:hover{background:var(--mint);color:#253D2C}
+.login-hint{text-align:center;font-size:.68rem;color:var(--t3);margin-top:14px}
+
+/* ─── APP SHELL ─── */
+.app{display:flex;height:100vh;overflow:hidden}
+
+/* ─── SIDEBAR ─── */
+.sb{
+  width:220px;flex-shrink:0;
+  background:var(--surface);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;height:100vh;overflow-y:auto;
+}
+.sb-brand{
+  padding:18px 16px 14px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:9px;
+}
+.sb-brand img{width:28px;height:28px;border-radius:6px;border:1px solid var(--line-hi)}
+.sb-brand-name{font-size:.88rem;font-weight:700;color:var(--t1)}
+.sb-brand-name b{color:var(--green)}
+
+.sb-nav{flex:1;padding:10px 8px}
+.sb-btn{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 11px;border-radius:8px;width:100%;
+  color:var(--t2);font-size:.82rem;font-weight:600;
+  margin-bottom:2px;transition:all .16s var(--ease);text-align:left;
+}
+.sb-btn:hover{color:var(--t1);background:var(--line)}
+.sb-btn.on{color:var(--green);background:var(--green-15)}
+.sb-ico{font-size:.95rem;flex-shrink:0;width:18px;text-align:center}
+
+.sb-foot{padding:12px 16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.theme-row{display:flex;align-items:center;justify-content:space-between}
+.theme-lbl{font-size:.72rem;font-weight:600;color:var(--t2)}
+.tog{width:40px;height:22px;border-radius:99px;background:var(--raised);border:1px solid var(--line-hi);position:relative;cursor:pointer;transition:all .3s}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--green);transition:transform .3s var(--spring)}
+[data-theme="dark"] .tog::after{transform:translateX(18px)}
+.out-btn{
+  width:100%;padding:8px;border-radius:7px;
+  border:1px solid var(--line);color:var(--t2);
+  font-size:.78rem;font-weight:600;font-family:inherit;
+  transition:all .18s;
+}
+.out-btn:hover{border-color:var(--red-30);color:var(--red);background:var(--red-10)}
+
+/* ─── MAIN ─── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{
+  height:56px;background:var(--surface);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;flex-shrink:0;
+}
+.topbar-title{font-size:1rem;font-weight:700;letter-spacing:-.02em}
+.topbar-right{display:flex;gap:8px}
+
+.content{flex:1;overflow-y:auto;padding:24px}
+
+/* ─── PANELS ─── */
+.panel{display:none}
+.panel.on{display:block}
+
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:7px;font-family:inherit;font-size:.78rem;font-weight:700;transition:all .18s var(--spring);border:none;cursor:pointer}
+.btn-g{background:var(--green);color:var(--btn-txt)}
+.btn-g:hover{background:var(--mint);color:#253D2C}
+.btn-ghost{background:var(--line);color:var(--t1);border:1px solid var(--line-hi)}
+.btn-ghost:hover{background:var(--line-hi)}
+.btn-edit{background:var(--green-15);color:var(--green);border:1px solid var(--green-25)}
+.btn-edit:hover{background:var(--green-25)}
+.btn-danger{background:var(--red-10);color:var(--red);border:1px solid var(--red-30)}
+.btn-danger:hover{background:var(--red-30)}
+.btn-amber{background:var(--amber-10);color:var(--amber);border:1px solid rgba(212,148,74,.3)}
+.btn-amber:hover{background:rgba(212,148,74,.2)}
+.btn-sm{padding:4px 11px;font-size:.72rem;border-radius:6px}
+
+/* ─── ALERT ─── */
+#alertZone{margin-bottom:12px}
+.msg{display:flex;align-items:center;gap:7px;padding:10px 14px;border-radius:8px;font-size:.8rem;font-weight:600;border:1px solid}
+.msg-ok {background:var(--green-15);color:var(--green);border-color:var(--green-25)}
+.msg-err{background:var(--red-10);color:var(--red);border-color:var(--red-30)}
+
+/* ─── STAT CARDS ─── */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.stat-c{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:11px;padding:18px 15px;
+  transition:border-color .18s;
+}
+.stat-c:hover{border-color:var(--line-hi)}
+.stat-ico{font-size:1.3rem;margin-bottom:7px}
+.stat-val{font-size:1.6rem;font-weight:800;letter-spacing:-.04em;color:var(--green)}
+.stat-lbl{font-size:.68rem;color:var(--t2);font-weight:600;margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ─── TABLE CARD ─── */
+.tc{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+.tc-title{font-size:.9rem;font-weight:700;letter-spacing:-.015em}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;padding:9px 14px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--t3);border-bottom:1px solid var(--line)}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:.81rem;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--mint-10)}
+.tbl-img{width:48px;height:34px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+.td-name{font-weight:700;font-size:.85rem;color:var(--t1)}
+.td-sub{font-size:.7rem;color:var(--t3);margin-top:1px}
+.td-price{font-weight:800;font-size:.9rem;color:var(--green)}
+
+/* STATUS BADGES */
+.s-active {display:inline-flex;padding:2px 8px;border-radius:4px;font-size:.66rem;font-weight:700;background:var(--green-15);color:var(--green);border:1px solid var(--green-25)}
+.s-hidden {display:inline-flex;padding:2px 8px;border-radius:4px;font-size:.66rem;font-weight:700;background:var(--red-10);color:var(--red);border:1px solid var(--red-30)}
+.s-oos    {display:inline-flex;padding:2px 8px;border-radius:4px;font-size:.66rem;font-weight:700;background:var(--amber-10);color:var(--amber);border:1px solid rgba(212,148,74,.3)}
+
+/* ─── STOCK CONTROL ─── */
+.stock-ctrl{display:flex;align-items:center;gap:5px}
+.sk-btn{
+  width:26px;height:26px;border-radius:6px;
+  border:1px solid var(--line-hi);background:var(--raised);
+  color:var(--t1);font-size:.95rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .16s;
+}
+.sk-btn:hover{border-color:var(--green);color:var(--green);background:var(--green-15)}
+.sk-val{
+  min-width:44px;text-align:center;
+  background:var(--inp);border:1px solid var(--line-hi);
+  border-radius:6px;padding:3px 7px;
+  font-size:.8rem;font-weight:700;color:var(--t1);
+}
+
+/* ─── MODAL ─── */
+.modal-bg{
+  position:fixed;inset:0;z-index:5000;
+  background:rgba(0,0,0,.65);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{
+  background:var(--surface);border:1px solid var(--line-hi);
+  border-radius:16px;width:100%;max-width:540px;
+  padding:26px;max-height:90vh;overflow-y:auto;
+  transform:scale(.95) translateY(12px);
+  transition:transform .32s var(--spring);
+}
+.modal-bg.open .modal{transform:scale(1) translateY(0)}
+.modal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-size:1rem;font-weight:800;letter-spacing:-.02em}
+.modal-x{width:28px;height:28px;border-radius:7px;background:var(--line);color:var(--t2);font-size:.85rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .16s}
+.modal-x:hover{background:var(--red-10);color:var(--red)}
+
+/* form */
+.form-g{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg.full{grid-column:1/-1}
+.fg label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3)}
+.fg input,.fg select,.fg textarea{
+  background:var(--inp);border:1px solid var(--line-hi);border-radius:7px;
+  padding:10px 11px;color:var(--t1);font-family:inherit;font-size:.85rem;
+  outline:none;transition:border-color .18s;width:100%;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green)}
+.fg select option{background:var(--surface)}
+.fg textarea{resize:vertical;min-height:72px;line-height:1.6}
+.form-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.prev-img{width:100%;height:120px;object-fit:cover;border-radius:7px;border:1px solid var(--line);margin-top:7px;display:none}
+.prev-img.show{display:block}
+
+/* ─── DRAG LIST ─── */
+.drag-list{display:flex;flex-direction:column;gap:7px}
+.drag-item{
+  display:flex;align-items:center;gap:10px;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:10px;padding:10px 13px;
+  cursor:grab;user-select:none;transition:border-color .18s;
+}
+.drag-item:hover{border-color:var(--line-hi)}
+.drag-item.dragging{opacity:.4;border-color:var(--green)}
+.drag-h{color:var(--t3);font-size:.9rem;flex-shrink:0}
+.drag-n{font-size:.7rem;font-weight:800;color:var(--green);min-width:18px}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--raised);border-radius:2px}
+
+@media(max-width:720px){
+  .sb{width:48px}
+  .sb-brand span,.sb-btn span:last-child,.theme-lbl,.out-btn{display:none}
+  .sb-btn{justify-content:center}
+  .content{padding:14px}
+  .topbar{padding:0 14px}
+  .form-g{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="loginScreen">
+  <div class="login-box">
+    <div class="login-brand">
+      <img src="products/logo.png" alt="AeroSync"/>
+      <span>Aero<b>Sync</b> BD</span>
+    </div>
+    <h1 class="login-title">Admin Access</h1>
+    <p class="login-sub">Sign in to manage your store</p>
+    <div class="login-err gone" id="loginErr">⚠ Incorrect credentials</div>
+    <form id="loginForm" autocomplete="on">
+      <div class="fld">
+        <label for="lu">Username</label>
+        <input type="text" id="lu" name="username" autocomplete="username" placeholder="admin" required/>
+      </div>
+      <div class="fld">
+        <label for="lp">Password</label>
+        <input type="password" id="lp" name="password" autocomplete="current-password" placeholder="••••••••" required/>
+      </div>
+      <button class="login-btn" type="submit">Sign In →</button>
+    </form>
+    <p class="login-hint">Default: admin / aerosync2026</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sb">
+    <div class="sb-brand">
+      <img src="products/logo.png" alt=""/>
+      <span class="sb-brand-name">Aero<b>Sync</b></span>
+    </div>
+    <nav class="sb-nav">
+      <button class="sb-btn on" data-panel="dashboard"><span class="sb-ico">📊</span><span>Dashboard</span></button>
+      <button class="sb-btn" data-panel="products"><span class="sb-ico">📦</span><span>Products</span></button>
+      <button class="sb-btn" data-panel="stock"><span class="sb-ico">🏪</span><span>Stock</span></button>
+      <button class="sb-btn" data-panel="categories"><span class="sb-ico">🗂</span><span>Categories</span></button>
+      <button class="sb-btn" data-panel="priority"><span class="sb-ico">↕</span><span>Priority</span></button>
+      <button class="sb-btn" data-panel="settings"><span class="sb-ico">⚙</span><span>Settings</span></button>
+    </nav>
+    <div class="sb-foot">
+      <div class="theme-row">
+        <span class="theme-lbl">Dark mode</span>
+        <button class="tog" id="themeBtn" aria-label="Toggle theme"></button>
+      </div>
+      <button class="out-btn" id="logoutBtn">🚪 Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topTitle">Dashboard</div>
+      <div class="topbar-right">
+        <a href="index.html" target="_blank" class="btn btn-ghost">🌐 Store</a>
+        <button class="btn btn-g" onclick="saveAll()">💾 Save All</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div id="alertZone"></div>
+
+      <!-- DASHBOARD -->
+      <div class="panel on" id="panel-dashboard">
+        <div class="stat-row" id="dashStats"></div>
+        <div class="tc">
+          <div class="tc-head"><span class="tc-title">Products Overview</span></div>
+          <div style="overflow-x:auto">
+            <table class="tbl">
+              <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Sales</th><th>Stock</th><th>Status</th></tr></thead>
+              <tbody id="dashBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="panel" id="panel-products">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+          <button class="btn btn-g" id="addProdBtn">+ Add Product</button>
+        </div>
+        <div class="tc">
+          <div class="tc-head"><span class="tc-title">All Products</span></div>
+          <div style="overflow-x:auto">
+            <table class="tbl">
+              <thead><tr><th>Img</th><th>Product</th><th>Category</th><th>Price</th><th>Priority</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="prodBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STOCK -->
+      <div class="panel" id="panel-stock">
+        <div class="tc">
+          <div class="tc-head"><span class="tc-title">Stock Management</span></div>
+          <div style="overflow-x:auto">
+            <table class="tbl">
+              <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Controls</th></tr></thead>
+              <tbody id="stockBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div class="panel" id="panel-categories">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+          <button class="btn btn-g" id="addCatBtn">+ Add Category</button>
+        </div>
+        <div class="tc">
+          <div class="tc-head"><span class="tc-title">Categories</span></div>
+          <div style="overflow-x:auto">
+            <table class="tbl">
+              <thead><tr><th>ID</th><th>Icon</th><th>Name</th><th>Priority</th><th>Actions</th></tr></thead>
+              <tbody id="catBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRIORITY -->
+      <div class="panel" id="panel-priority">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+          <div>
+            <div style="font-size:.88rem;font-weight:700;margin-bottom:12px">Product Order</div>
+            <div class="drag-list" id="prodDrag"></div>
+          </div>
+          <div>
+            <div style="font-size:.88rem;font-weight:700;margin-bottom:12px">Category Order</div>
+            <div class="drag-list" id="catDrag"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="panel" id="panel-settings">
+        <div style="max-width:420px;display:flex;flex-direction:column;gap:14px">
+
+          <div class="tc" style="padding:22px">
+            <div style="font-size:.88rem;font-weight:700;margin-bottom:16px">Store Settings</div>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <div class="fg"><label>Messenger Link</label><input type="text" id="s-msg" value="https://m.me/aerosync.bd"/></div>
+              <div class="fg"><label>Store Name</label><input type="text" id="s-name" value="AeroSync BD"/></div>
+              <div class="fg"><label>Currency Symbol</label><input type="text" id="s-cur" value="৳"/></div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
+              <button class="btn btn-g" onclick="saveSettings()">Save Settings</button>
+            </div>
+          </div>
+
+          <div class="tc" style="padding:22px">
+            <div style="font-size:.88rem;font-weight:700;margin-bottom:4px">GitHub Auto-Publish 🚀</div>
+            <p style="font-size:.72rem;color:var(--t2);margin-bottom:13px">Enter your GitHub token once. Click “Save & Publish” to push changes live to all visitors.</p>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <div class="fg"><label>GitHub Token (stored locally)</label><input type="password" id="s-ghtoken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off"/></div>
+              <div class="fg"><label>GitHub Username</label><input type="text" id="s-ghuser" value="aerosyncbd"/></div>
+              <div class="fg"><label>Repository Name</label><input type="text" id="s-ghrepo" value="aerosyncbd.github.io"/></div>
+              <div class="fg"><label>Branch</label><input type="text" id="s-ghbranch" value="main"/></div>
+              <div class="fg"><label>File Path in Repo</label><input type="text" id="s-ghpath" value="inventory.json"/></div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn btn-g" onclick="saveGhSettings()">Save Token</button>
+              <button class="btn btn-amber" id="publishBtn" onclick="publishToGitHub()">🚀 Publish to GitHub Now</button>
+            </div>
+            <div id="publishStatus" style="margin-top:10px;font-size:.75rem;color:var(--t2)"></div>
+          </div>
+
+          <div class="tc" style="padding:22px">
+            <div style="font-size:.88rem;font-weight:700;margin-bottom:16px">Change Password</div>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <div class="fg"><label>New Password</label><input type="password" id="s-np" placeholder="New password"/></div>
+              <div class="fg"><label>Confirm Password</label><input type="password" id="s-cp" placeholder="Confirm"/></div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
+              <button class="btn btn-g" onclick="changePass()">Update Password</button>
+            </div>
+          </div>
+
+          <div class="tc" style="padding:22px">
+            <div style="font-size:.88rem;font-weight:700;color:var(--red);margin-bottom:7px">Danger Zone</div>
+            <p style="font-size:.78rem;color:var(--t2);margin-bottom:13px">Reset all data to factory defaults. This cannot be undone.</p>
+            <button class="btn btn-danger" onclick="resetAll()">🗑 Reset All Data</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- PRODUCT MODAL -->
+<div class="modal-bg" id="prodModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-top">
+      <span class="modal-title" id="prodModalTitle">Add Product</span>
+      <button class="modal-x" onclick="closeMod('prodModal')">✕</button>
+    </div>
+    <div class="form-g">
+      <div class="fg"><label>Name *</label><input type="text" id="f-name" placeholder="Google AI Pro"/></div>
+      <div class="fg"><label>Subtitle *</label><input type="text" id="f-sub" placeholder="18 Month Subscription"/></div>
+      <div class="fg"><label>Category *</label><select id="f-cat"></select></div>
+      <div class="fg"><label>Badge Text</label><input type="text" id="f-badge" placeholder="Best Value"/></div>
+      <div class="fg"><label>Badge Style</label>
+        <select id="f-btype">
+          <option value="green">Green</option>
+          <option value="mint">Mint</option>
+          <option value="forest">Forest</option>
+        </select>
+      </div>
+      <div class="fg"><label>Price (৳) *</label><input type="number" id="f-price" placeholder="1499" min="0"/></div>
+      <div class="fg"><label>Original Price (৳)</label><input type="number" id="f-oprice" placeholder="2999" min="0"/></div>
+      <div class="fg"><label>Priority</label><input type="number" id="f-pri" placeholder="1" min="1"/></div>
+      <div class="fg"><label>Stock (blank = unlimited)</label><input type="number" id="f-stock" placeholder="∞" min="0"/></div>
+      <div class="fg full">
+        <label>Image Path</label>
+        <input type="text" id="f-img" placeholder="products/my-product.png"/>
+        <img id="f-imgprev" class="prev-img" alt="Preview"/>
+      </div>
+      <div class="fg full">
+        <label>Features (one per line)</label>
+        <textarea id="f-feats" rows="4" placeholder="Feature 1&#10;Feature 2&#10;Feature 3"></textarea>
+      </div>
+      <div class="fg full" style="flex-direction:row;align-items:center;gap:9px">
+        <input type="checkbox" id="f-avail" style="width:16px;height:16px" checked/>
+        <label style="font-size:.82rem;font-weight:600;text-transform:none;letter-spacing:0;color:var(--t1)">Visible to customers</label>
+      </div>
+    </div>
+    <div class="form-foot">
+      <button class="btn btn-ghost" onclick="closeMod('prodModal')">Cancel</button>
+      <button class="btn btn-g" onclick="saveProd()">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- CAT MODAL -->
+<div class="modal-bg" id="catModal" role="dialog" aria-modal="true">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-top">
+      <span class="modal-title" id="catModalTitle">Add Category</span>
+      <button class="modal-x" onclick="closeMod('catModal')">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:11px">
+      <div class="fg"><label>ID (no spaces) *</label><input type="text" id="c-id" placeholder="google-ai"/></div>
+      <div class="fg"><label>Name *</label><input type="text" id="c-name" placeholder="Google AI"/></div>
+      <div class="fg"><label>Icon (emoji)</label><input type="text" id="c-icon" placeholder="✨"/></div>
+      <div class="fg"><label>Priority</label><input type="number" id="c-pri" placeholder="1" min="0"/></div>
+    </div>
+    <div class="form-foot">
+      <button class="btn btn-ghost" onclick="closeMod('catModal')">Cancel</button>
+      <button class="btn btn-g" onclick="saveCat()">Save Category</button>
+    </div>
+  </div>
+</div>
+
+<script src="products.js"></script>
+<script>
+/* NOTE: products.js is still included so getSalesData() helper is available,
+   but product/category DATA now comes from inventory.json fetch below. */
+
+/* ── HELPERS ── */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+function load(k,d){try{const s=localStorage.getItem(k);if(s)return JSON.parse(s);}catch(e){}return JSON.parse(JSON.stringify(d))}
+
+/* ── AUTH ── */
+const DEF = {user:'admin', pass:'aerosync2026'};
+function getCreds(){ try{const c=JSON.parse(localStorage.getItem('as-creds')||'{}'); return {user:c.user||DEF.user,pass:c.pass||DEF.pass};}catch{return DEF;} }
+function authed(){return sessionStorage.getItem('as-ok')==='1'}
+function doLogin(){sessionStorage.setItem('as-ok','1'); boot()}
+function doLogout(){sessionStorage.removeItem('as-ok'); showLogin()}
+function showLogin(){$('#loginScreen').classList.remove('gone'); $('#app').style.display='none'}
+function showApp(){$('#loginScreen').classList.add('gone'); $('#app').style.display='flex'}
+function boot(){showApp(); initApp()}
+
+if(authed()) boot();
+
+$('#loginForm').onsubmit = e => {
+  e.preventDefault();
+  const u=$('#lu').value.trim(), p=$('#lp').value;
+  const c = getCreds();
+  if(u===c.user && p===c.pass){ $('#loginErr').classList.add('gone'); doLogin(); }
+  else{ $('#loginErr').classList.remove('gone'); $('#lp').value=''; $('#lp').focus(); }
+};
+$('#logoutBtn').onclick = () => { if(confirm('Sign out?')) doLogout(); };
+
+/* ── THEME ── */
+const html = document.documentElement;
+const t0 = localStorage.getItem('theme')||'dark';
+html.dataset.theme = t0;
+$('#themeBtn').onclick = () => {
+  const n = html.dataset.theme==='dark'?'light':'dark';
+  html.dataset.theme=n; localStorage.setItem('theme',n);
+};
+function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function showMsg(m,t='ok'){
+  const z=$('#alertZone');
+  z.innerHTML=`<div class="msg msg-${t}" role="alert">${t==='ok'?'✓':' ✕'} ${m}</div>`;
+  setTimeout(()=>{z.innerHTML=''},3200);
+}
+
+/* ── DATA ── */
+let products, categories, storeSettings;
+
+async function loadInventory() {
+  try {
+    const r = await fetch('inventory.json?_=' + Date.now());
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    products      = data.products   || JSON.parse(JSON.stringify(AEROSYNC_PRODUCTS));
+    categories    = data.categories || JSON.parse(JSON.stringify(AEROSYNC_CATEGORIES));
+    storeSettings = data.settings   || {messengerLink:'https://m.me/aerosync.bd',storeName:'AeroSync BD',currency:'৳'};
+    // Populate settings fields
+    if ($('#s-msg'))  $('#s-msg').value  = storeSettings.messengerLink || '';
+    if ($('#s-name')) $('#s-name').value = storeSettings.storeName     || '';
+    if ($('#s-cur'))  $('#s-cur').value  = storeSettings.currency      || '৳';
+  } catch(e) {
+    // Fallback to defaults if file not found (first run)
+    products      = JSON.parse(JSON.stringify(AEROSYNC_PRODUCTS));
+    categories    = JSON.parse(JSON.stringify(AEROSYNC_CATEGORIES));
+    storeSettings = {messengerLink:'https://m.me/aerosync.bd',storeName:'AeroSync BD',currency:'৳'};
+    console.warn('Could not load inventory.json, using defaults.', e);
+  }
+}
+
+function buildInventoryJSON() {
+  return JSON.stringify({
+    products,
+    categories,
+    settings: storeSettings
+  }, null, 2);
+}
+
+/* ── SALES ── */
+const qs=str=>{let h=0;for(let i=0;i<str.length;i++)h=(h*31+str.charCodeAt(i))>>>0;return h};
+const sr=(s,i=0)=>{let x=Math.sin(s*9301+i*49297+233)*10000;return x-Math.floor(x)};
+const LAUNCH=new Date('2026-06-10T00:00:00+06:00');
+function salesFor(id){
+  const s=qs(id), days=Math.max(0,Math.floor((Date.now()-LAUNCH)/86400000));
+  let tot=1; for(let d=1;d<=days;d++) tot+=Math.floor(sr(s,d)*14)+1;
+  return tot;
+}
+function totalSales(){return products.reduce((s,p)=>s+salesFor(p.id),0)}
+
+/* ── INIT ── */
+function initApp(){
+  loadGhSettings();
+  loadInventory().then(() => {
+    $$('.sb-btn[data-panel]').forEach(b=>{
+      b.onclick=()=>{
+        $$('.sb-btn').forEach(x=>x.classList.remove('on'));
+        $$('.panel').forEach(p=>p.classList.remove('on'));
+        b.classList.add('on');
+        $(`#panel-${b.dataset.panel}`).classList.add('on');
+        $('#topTitle').textContent = b.querySelector('span:last-child').textContent;
+        if(b.dataset.panel==='priority') renderPriority();
+        if(b.dataset.panel==='stock') renderStock();
+        if(b.dataset.panel==='dashboard') renderDash();
+      };
+    });
+    $('#addProdBtn').onclick = openAddProd;
+    $('#addCatBtn').onclick  = openAddCat;
+    $('#f-img').oninput = function(){ const p=$('#f-imgprev'); if(this.value){p.src=this.value;p.classList.add('show')}else p.classList.remove('show'); };
+    $$('.modal-bg').forEach(m=>m.onclick=e=>{if(e.target===m)closeMod(m.id)});
+    document.onkeydown=e=>{if(e.key==='Escape')$$('.modal-bg.open').forEach(m=>closeMod(m.id))};
+    renderDash(); renderProducts(); renderStock(); renderCats();
+  });
+}
+
+/* ── DASHBOARD ── */
+function renderDash(){
+  const tot=totalSales(), avail=products.filter(p=>p.available!==false).length;
+  const low=products.filter(p=>p.stock!=null&&p.stock<=3&&p.available!==false).length;
+  const days=Math.max(1,Math.floor((Date.now()-LAUNCH)/86400000));
+  $('#dashStats').innerHTML=`
+    <div class="stat-c"><div class="stat-ico">📦</div><div class="stat-val">${products.length}</div><div class="stat-lbl">Products</div></div>
+    <div class="stat-c"><div class="stat-ico">✅</div><div class="stat-val">${avail}</div><div class="stat-lbl">Active</div></div>
+    <div class="stat-c"><div class="stat-ico">🛒</div><div class="stat-val">${tot.toLocaleString()}</div><div class="stat-lbl">Total Sales</div></div>
+    <div class="stat-c"><div class="stat-ico">📅</div><div class="stat-val">${days}</div><div class="stat-lbl">Days Active</div></div>
+    <div class="stat-c"><div class="stat-ico">⚠</div><div class="stat-val" style="${low?'color:var(--amber)':''}">${low}</div><div class="stat-lbl">Low Stock</div></div>
+    <div class="stat-c"><div class="stat-ico">🗂</div><div class="stat-val">${categories.length}</div><div class="stat-lbl">Categories</div></div>`;
+
+  const sorted=[...products].sort((a,b)=>(a.priority||99)-(b.priority||99));
+  $('#dashBody').innerHTML=sorted.map(p=>{
+    const cat=categories.find(c=>c.id===p.category);
+    const stk=p.stock==null?'∞':p.stock;
+    const sb=p.available===false?'s-hidden':p.stock!=null&&p.stock<=0?'s-oos':'s-active';
+    const st=p.available===false?'Hidden':p.stock!=null&&p.stock<=0?'Out of Stock':'Active';
+    const ssk=p.stock!=null&&p.stock<=0?'s-oos':p.stock!=null&&p.stock<=3?'s-oos':'s-active';
+    return `<tr>
+      <td><img src="${p.image}" class="tbl-img" alt=""/></td>
+      <td><div class="td-name">${p.name}</div><div class="td-sub">${p.subtitle}</div></td>
+      <td style="font-size:.78rem;color:var(--t2)">${cat?cat.icon+' '+cat.name:p.category}</td>
+      <td class="td-price">৳${p.price.toLocaleString()}</td>
+      <td>${salesFor(p.id).toLocaleString()}</td>
+      <td><span class="${ssk}">${stk}</span></td>
+      <td><span class="${sb}">${st}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── PRODUCTS ── */
+function renderProducts(){
+  const sorted=[...products].sort((a,b)=>(a.priority||99)-(b.priority||99));
+  $('#prodBody').innerHTML=sorted.map(p=>{
+    const sb=p.available===false?'s-hidden':p.stock!=null&&p.stock<=0?'s-oos':'s-active';
+    const st=p.available===false?'Hidden':p.stock!=null&&p.stock<=0?'Out of Stock':'Active';
+    return `<tr>
+      <td><img src="${p.image}" class="tbl-img" alt=""/></td>
+      <td><div class="td-name">${p.name}</div><div class="td-sub">${p.subtitle}</div></td>
+      <td style="font-size:.78rem;color:var(--t2)">${p.category}</td>
+      <td class="td-price">৳${p.price.toLocaleString()}</td>
+      <td style="font-weight:700">${p.priority||'-'}</td>
+      <td><span class="${sb}">${st}</span></td>
+      <td><div style="display:flex;gap:5px;flex-wrap:wrap">
+        <button class="btn btn-edit btn-sm" onclick="openEditProd('${p.id}')">✏ Edit</button>
+        <button class="btn btn-amber btn-sm" onclick="toggleVis('${p.id}')">${p.available===false?'👁 Show':'🙈 Hide'}</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteProd('${p.id}')">🗑</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── STOCK ── */
+function renderStock(){
+  const sorted=[...products].sort((a,b)=>(a.priority||99)-(b.priority||99));
+  $('#stockBody').innerHTML=sorted.map(p=>{
+    const sk=p.stock;
+    const txt=sk==null?'Unlimited':sk<=0?'Out of Stock':sk<=3?`Low (${sk})`:sk;
+    const sb=p.available===false?'s-hidden':sk!=null&&sk<=0?'s-oos':sk!=null&&sk<=3?'s-oos':'s-active';
+    const st=p.available===false?'Hidden':sk!=null&&sk<=0?'Out of Stock':'Active';
+    const ssk=sk==null?'s-active':sk<=0?'s-oos':sk<=3?'s-oos':'s-active';
+    return `<tr>
+      <td><div class="td-name">${p.name}</div><div class="td-sub">${p.subtitle}</div></td>
+      <td style="font-size:.78rem;color:var(--t2)">${p.category}</td>
+      <td class="td-price">৳${p.price.toLocaleString()}</td>
+      <td><span class="${ssk}">${txt}</span></td>
+      <td><span class="${sb}">${st}</span></td>
+      <td><div class="stock-ctrl">
+        <button class="sk-btn" onclick="adjStock('${p.id}',-1)">−</button>
+        <div class="sk-val">${sk==null?'∞':sk}</div>
+        <button class="sk-btn" onclick="adjStock('${p.id}',1)">+</button>
+        <button class="btn btn-edit btn-sm" onclick="setUnlim('${p.id}')">∞</button>
+        <button class="btn btn-danger btn-sm" onclick="setZero('${p.id}')">0</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function adjStock(id,d){ const p=products.find(x=>x.id===id); if(!p)return; p.stock=p.stock==null?(d>0?1:0):Math.max(0,p.stock+d); renderStock(); renderDash(); renderProducts(); showMsg(`${p.name}: stock → ${p.stock}`); }
+function setUnlim(id){ const p=products.find(x=>x.id===id); if(!p)return; p.stock=null; renderStock(); renderDash(); renderProducts(); showMsg(`${p.name}: Unlimited`); }
+function setZero(id) { const p=products.find(x=>x.id===id); if(!p)return; p.stock=0;    renderStock(); renderDash(); renderProducts(); showMsg(`${p.name}: Out of Stock`); }
+
+/* ── CATEGORIES ── */
+function renderCats(){
+  const sorted=[...categories].sort((a,b)=>a.priority-b.priority);
+  $('#catBody').innerHTML=sorted.map(c=>`<tr>
+    <td style="font-size:.7rem;color:var(--t2);font-family:monospace">${c.id}</td>
+    <td style="font-size:1.1rem">${c.icon}</td>
+    <td style="font-weight:700;font-size:.85rem">${c.name}</td>
+    <td style="font-weight:700">${c.priority}</td>
+    <td><div style="display:flex;gap:5px">
+      <button class="btn btn-edit btn-sm" onclick="openEditCat('${c.id}')">✏ Edit</button>
+      ${c.id!=='all'?`<button class="btn btn-danger btn-sm" onclick="deleteCat('${c.id}')">🗑</button>`:''}
+    </div></td>
+  </tr>`).join('');
+}
+
+/* ── PRODUCT MODAL ── */
+let editId=null;
+function fillCatSel(){ $('#f-cat').innerHTML=categories.filter(c=>c.id!=='all').map(c=>`<option value="${c.id}">${c.icon} ${c.name}</option>`).join(''); }
+function openAddProd(){
+  editId=null; $('#prodModalTitle').textContent='Add Product';
+  ['f-name','f-sub','f-badge','f-img'].forEach(i=>$(('#'+i)).value='');
+  ['f-price','f-oprice','f-stock'].forEach(i=>$(('#'+i)).value='');
+  $('#f-pri').value=products.length+1; $('#f-feats').value='';
+  $('#f-avail').checked=true; $('#f-btype').value='green';
+  $('#f-imgprev').classList.remove('show'); fillCatSel(); openMod('prodModal');
+}
+function openEditProd(id){
+  const p=products.find(x=>x.id===id); if(!p)return;
+  editId=id; $('#prodModalTitle').textContent='Edit Product';
+  $('#f-name').value=p.name; $('#f-sub').value=p.subtitle;
+  $('#f-badge').value=p.badge||''; $('#f-btype').value=p.badgeType||'green';
+  $('#f-price').value=p.price; $('#f-oprice').value=p.originalPrice||'';
+  $('#f-pri').value=p.priority||''; $('#f-stock').value=p.stock!=null?p.stock:'';
+  $('#f-feats').value=(p.features||[]).join('\n'); $('#f-avail').checked=p.available!==false;
+  $('#f-img').value=p.image||'';
+  const pr=$('#f-imgprev');
+  if(p.image){pr.src=p.image;pr.classList.add('show')}else pr.classList.remove('show');
+  fillCatSel(); $('#f-cat').value=p.category; openMod('prodModal');
+}
+function saveProd(){
+  const name=$('#f-name').value.trim(), sub=$('#f-sub').value.trim(), price=parseInt($('#f-price').value);
+  if(!name||!sub||isNaN(price)){showMsg('Fill required fields','err');return;}
+  const sv=$('#f-stock').value; const stock=sv===''?null:parseInt(sv);
+  const feats=$('#f-feats').value.split('\n').map(f=>f.trim()).filter(Boolean);
+  if(editId){
+    const idx=products.findIndex(p=>p.id===editId);
+    if(idx!==-1) products[idx]={...products[idx],name,subtitle:sub,category:$('#f-cat').value,badge:$('#f-badge').value,badgeType:$('#f-btype').value,price,originalPrice:parseInt($('#f-oprice').value)||price,priority:parseInt($('#f-pri').value)||99,image:$('#f-img').value||products[idx].image,stock,features:feats,available:$('#f-avail').checked};
+  } else {
+    const nid=name.toLowerCase().replace(/\s+/g,'-')+'-'+Date.now();
+    products.push({id:nid,name,subtitle:sub,category:$('#f-cat').value,badge:$('#f-badge').value,badgeType:$('#f-btype').value,price,originalPrice:parseInt($('#f-oprice').value)||price,priority:parseInt($('#f-pri').value)||products.length+1,image:$('#f-img').value||'products/logo.png',stock,features:feats,available:$('#f-avail').checked,totalSales:null});
+  }
+  save('as-products',products); closeMod('prodModal');
+  renderProducts(); renderDash(); renderStock();
+  showMsg(editId?'Product updated!':'Product added!');
+}
+function deleteProd(id){
+  if(!confirm('Delete this product?'))return;
+  products=products.filter(p=>p.id!==id); save('as-products',products);
+  renderProducts(); renderDash(); renderStock(); showMsg('Product deleted.');
+}
+function toggleVis(id){
+  const p=products.find(x=>x.id===id); if(!p)return;
+  p.available=p.available===false; save('as-products',products);
+  renderProducts(); renderDash(); showMsg(`Product ${p.available?'visible':'hidden'}.`);
+}
+
+/* ── CAT MODAL ── */
+let editCatId=null;
+function openAddCat(){
+  editCatId=null; $('#catModalTitle').textContent='Add Category';
+  ['c-id','c-name','c-icon'].forEach(i=>$(('#'+i)).value='');
+  $('#c-pri').value=categories.length; $('#c-id').disabled=false; openMod('catModal');
+}
+function openEditCat(id){
+  const c=categories.find(x=>x.id===id); if(!c)return;
+  editCatId=id; $('#catModalTitle').textContent='Edit Category';
+  $('#c-id').value=c.id; $('#c-name').value=c.name; $('#c-icon').value=c.icon; $('#c-pri').value=c.priority;
+  $('#c-id').disabled=true; openMod('catModal');
+}
+function saveCat(){
+  const id=$('#c-id').value.trim().toLowerCase(), name=$('#c-name').value.trim();
+  const icon=$('#c-icon').value.trim()||'📁', priority=parseInt($('#c-pri').value)||99;
+  if(!name){showMsg('Name required','err');return;}
+  if(editCatId){
+    const c=categories.find(x=>x.id===editCatId);
+    if(c){c.name=name;c.icon=icon;c.priority=priority;}
+  } else {
+    if(!id){showMsg('ID required','err');return;}
+    if(categories.find(c=>c.id===id)){showMsg('ID already exists','err');return;}
+    categories.push({id,name,icon,priority});
+  }
+  $('#c-id').disabled=false;
+  closeMod('catModal'); renderCats(); showMsg(editCatId?'Category updated!':'Category added!');
+}
+function deleteCat(id){
+  if(id==='all'||!confirm('Delete this category?'))return;
+  categories=categories.filter(c=>c.id!==id);
+  renderCats(); showMsg('Deleted.');
+}
+
+/* ── PRIORITY DRAG ── */
+function renderPriority(){ buildDrag('prodDrag','prod'); buildDrag('catDrag','cat'); }
+function buildDrag(cid,type){
+  const list=$(('#'+cid));
+  const items=type==='prod'
+    ?[...products].sort((a,b)=>(a.priority||99)-(b.priority||99))
+    :[...categories].sort((a,b)=>a.priority-b.priority);
+  list.innerHTML=items.map((x,i)=>`
+    <div class="drag-item" draggable="true" data-id="${x.id}" data-type="${type}">
+      <span class="drag-h">⠿</span>
+      <span class="drag-n">#${i+1}</span>
+      ${type==='prod'
+        ?`<img src="${x.image}" style="width:32px;height:22px;object-fit:cover;border-radius:4px;border:1px solid var(--line)" alt=""/>`
+        :`<span style="font-size:1rem">${x.icon}</span>`}
+      <span style="flex:1;font-size:.8rem;font-weight:600">${x.name} ${type==='prod'?`<span style="color:var(--t3);font-weight:400">${x.subtitle}</span>`:''}</span>
+    </div>`).join('');
+  let dragged=null;
+  list.querySelectorAll('.drag-item').forEach(el=>{
+    el.ondragstart=()=>{ dragged=el; el.classList.add('dragging'); };
+    el.ondragend=()=>{
+      el.classList.remove('dragging');
+      const order=[...list.querySelectorAll('.drag-item')].map(x=>x.dataset.id);
+      if(type==='prod'){
+        order.forEach((id,i)=>{ const p=products.find(x=>x.id===id); if(p) p.priority=i+1; });
+        save('as-products',products); renderProducts();
+      } else {
+        order.forEach((id,i)=>{ const c=categories.find(x=>x.id===id); if(c) c.priority=i; });
+        save('as-categories',categories); renderCats();
+      }
+      buildDrag(cid,type); showMsg('Priority saved!');
+    };
+    el.ondragover=e=>{ e.preventDefault(); const r=el.getBoundingClientRect(); e.clientY<r.top+r.height/2?list.insertBefore(dragged,el):list.insertBefore(dragged,el.nextSibling); };
+  });
+}
+
+/* ── SETTINGS ── */
+function saveSettings(){
+  storeSettings = {
+    messengerLink: $('#s-msg').value,
+    storeName:     $('#s-name').value,
+    currency:      $('#s-cur').value
+  };
+  showMsg('Settings saved! Click “Save & Publish” to push live.');
+}
+
+/* ── GITHUB PUBLISH ── */
+function loadGhSettings(){
+  const gh = JSON.parse(localStorage.getItem('as-gh')||'{}');
+  if(gh.token)  { $('#s-ghtoken').value  = gh.token; }
+  if(gh.user)   { $('#s-ghuser').value   = gh.user; }
+  if(gh.repo)   { $('#s-ghrepo').value   = gh.repo; }
+  if(gh.branch) { $('#s-ghbranch').value = gh.branch; }
+  if(gh.path)   { $('#s-ghpath').value   = gh.path; }
+}
+function saveGhSettings(){
+  const gh = {
+    token:  $('#s-ghtoken').value.trim(),
+    user:   $('#s-ghuser').value.trim(),
+    repo:   $('#s-ghrepo').value.trim(),
+    branch: $('#s-ghbranch').value.trim() || 'main',
+    path:   $('#s-ghpath').value.trim()   || 'inventory.json'
+  };
+  localStorage.setItem('as-gh', JSON.stringify(gh));
+  showMsg('GitHub settings saved!');
+}
+async function publishToGitHub(){
+  const gh = JSON.parse(localStorage.getItem('as-gh')||'{}');
+  const token  = gh.token  || $('#s-ghtoken').value.trim();
+  const user   = gh.user   || $('#s-ghuser').value.trim();
+  const repo   = gh.repo   || $('#s-ghrepo').value.trim();
+  const branch = gh.branch || $('#s-ghbranch').value.trim() || 'main';
+  const path   = gh.path   || $('#s-ghpath').value.trim()   || 'inventory.json';
+
+  if(!token){ showMsg('Enter your GitHub token in Settings first!','err'); return; }
+  if(!user || !repo){ showMsg('Enter GitHub username and repo name!','err'); return; }
+
+  const btn = $('#publishBtn');
+  const statusEl = $('#publishStatus');
+  btn.disabled = true;
+  btn.textContent = '⏳ Publishing…';
+  statusEl.textContent = 'Connecting to GitHub…';
+
+  try {
+    const apiBase = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+    const headers = {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    };
+
+    // 1. Get current file SHA (needed to update existing file)
+    let sha = null;
+    try {
+      const existing = await fetch(apiBase + `?ref=${branch}`, { headers });
+      if (existing.ok) {
+        const j = await existing.json();
+        sha = j.sha;
+      }
+    } catch(_) {}
+
+    // 2. Build the new inventory JSON
+    const content = buildInventoryJSON();
+    const encoded = btoa(unescape(encodeURIComponent(content))); // UTF-8 safe base64
+
+    // 3. Commit to GitHub
+    const body = {
+      message: '✅ Admin update: inventory.json via AeroSync Admin Panel',
+      content: encoded,
+      branch
+    };
+    if (sha) body.sha = sha;
+
+    statusEl.textContent = 'Uploading inventory.json…';
+    const res = await fetch(apiBase, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify(body)
+    });
+
+    if (res.ok) {
+      statusEl.innerHTML = '✅ <strong>Published!</strong> GitHub Pages will update in ~60 seconds.';
+      showMsg('Published to GitHub! Live site updating…');
+    } else {
+      const err = await res.json();
+      statusEl.textContent = '❌ Error: ' + (err.message || res.status);
+      showMsg('GitHub error: ' + (err.message || res.status), 'err');
+    }
+  } catch(e) {
+    statusEl.textContent = '❌ Network error: ' + e.message;
+    showMsg('Network error. Check console.', 'err');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🚀 Publish to GitHub Now';
+  }
+}
+
+function changePass(){
+  const np=$('#s-np').value, cp=$('#s-cp').value;
+  if(!np){showMsg('Enter new password','err');return;}
+  if(np!==cp){showMsg('Passwords do not match','err');return;}
+  if(np.length<6){showMsg('Minimum 6 characters','err');return;}
+  const c=getCreds(); save('as-creds',{user:c.user,pass:np});
+  $('#s-np').value=''; $('#s-cp').value='';
+  showMsg('Password updated! Use it next login.');
+}
+function resetAll(){
+  if(!confirm('Reset ALL data to defaults?'))return;
+  loadInventory().then(()=>{ renderDash(); renderProducts(); renderStock(); renderCats(); showMsg('Reloaded from inventory.json.'); });
+}
+function saveAll(){
+  publishToGitHub();
+}
+
+/* ── MODALS ── */
+function openMod(id){$(('#'+id)).classList.add('open')}
+function closeMod(id){$(('#'+id)).classList.remove('open'); $('#c-id').disabled=false}
+</script>
+</body>
+</html>
