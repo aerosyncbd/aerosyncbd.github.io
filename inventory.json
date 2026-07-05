@@ -210,13 +210,13 @@
       "id": "google-ai",
       "name": "Google AI",
       "icon": "✨",
-      "priority": 1
+      "priority": 2
     },
     {
       "id": "chatgpt",
       "name": "ChatGPT Plus",
       "icon": "🤖",
-      "priority": 2
+      "priority": 1
     },
     {
       "id": "capcut",
