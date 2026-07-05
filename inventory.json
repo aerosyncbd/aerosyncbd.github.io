@@ -116,10 +116,10 @@
       "subtitle": "1 Month Readymade Personal (HW)",
       "category": "chatgpt",
       "price": 590,
-      "originalPrice": 1200,
+      "originalPrice": 100,
       "image": "products/chatgpt-personal.png",
       "badge": "Premium",
-      "badgeType": "",
+      "badgeType": "mint",
       "priority": 2,
       "features": [
         "GPT-5 Architecture",
