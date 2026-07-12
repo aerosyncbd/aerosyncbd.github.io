@@ -197,6 +197,27 @@
       ],
       "stock": 0,
       "available": true
+    },
+    {
+      "id": "codex-1783859326933",
+      "name": "CODEX",
+      "subtitle": "1 Month Subscription",
+      "category": "chatgpt",
+      "badge": "",
+      "badgeType": "green",
+      "price": 750,
+      "originalPrice": 1899,
+      "priority": 10,
+      "image": "products /a_high_fidelity_ultra_professional_4k_marketing_banner_for_codex_exactly.png",
+      "stock": null,
+      "features": [
+        "GPT-5 Architecture",
+        "Codex Programming",
+        "DALL-E 3 Ultra",
+        "Advanced Data Analytics"
+      ],
+      "available": true,
+      "totalSales": null
     }
   ],
   "categories": [
