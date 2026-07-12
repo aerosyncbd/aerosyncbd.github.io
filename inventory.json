@@ -208,7 +208,7 @@
       "price": 750,
       "originalPrice": 1899,
       "priority": 10,
-      "image": "products /a_high_fidelity_ultra_professional_4k_marketing_banner_for_codex_exactly.png",
+      "image": "products/a_high_fidelity_ultra_professional_4k_marketing_banner_for_codex_exactly.png",
       "stock": null,
       "features": [
         "GPT-5 Architecture",
