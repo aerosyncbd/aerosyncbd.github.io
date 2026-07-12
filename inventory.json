@@ -10,7 +10,7 @@
       "image": "products/google-ai-pro-18m.png",
       "badge": "Best Value",
       "badgeType": "",
-      "priority": 4,
+      "priority": 5,
       "features": [
         "Gemini 1.5 Pro",
         "1M+ Context Window",
@@ -32,7 +32,7 @@
       "image": "products/google-ai-pro-1y.png",
       "badge": "Popular",
       "badgeType": "",
-      "priority": 5,
+      "priority": 6,
       "features": [
         "Gemini 1.5 Pro",
         "1M+ Context Window",
@@ -54,7 +54,7 @@
       "image": "products/google-ai-pro-4m.png",
       "badge": "Starter",
       "badgeType": "green",
-      "priority": 6,
+      "priority": 7,
       "features": [
         "Gemini 1.5 Pro",
         "1M+ Context Window",
@@ -76,7 +76,7 @@
       "image": "products/chatgpt-shared.png",
       "badge": "Budget Pick",
       "badgeType": "green",
-      "priority": 3,
+      "priority": 4,
       "features": [
         "GPT-5 Architecture",
         "Codex Programming",
@@ -98,7 +98,7 @@
       "image": "products/chatgpt-ownmail.png",
       "badge": "Recommended",
       "badgeType": "",
-      "priority": 1,
+      "priority": 2,
       "features": [
         "GPT-5 Architecture",
         "Codex Programming",
@@ -120,7 +120,7 @@
       "image": "products/chatgpt-personal.png",
       "badge": "Premium",
       "badgeType": "green",
-      "priority": 2,
+      "priority": 3,
       "features": [
         "GPT-5 Architecture",
         "Codex Programming",
@@ -142,7 +142,7 @@
       "image": "products/capcut-purple.png",
       "badge": "Hot",
       "badgeType": "red",
-      "priority": 7,
+      "priority": 8,
       "features": [
         "Advanced AI Editing",
         "Pro Visual Effects",
@@ -164,7 +164,7 @@
       "image": "products/capcut-blue.png",
       "badge": "New",
       "badgeType": "blue",
-      "priority": 8,
+      "priority": 9,
       "features": [
         "Advanced AI Editing",
         "Pro Visual Effects",
@@ -186,7 +186,7 @@
       "image": "products/canva-pro.png",
       "badge": "Creative",
       "badgeType": "purple",
-      "priority": 9,
+      "priority": 10,
       "features": [
         "Magic Studio AI",
         "100M+ Premium Assets",
@@ -207,7 +207,7 @@
       "badgeType": "green",
       "price": 750,
       "originalPrice": 1899,
-      "priority": 10,
+      "priority": 1,
       "image": "products/a_high_fidelity_ultra_professional_4k_marketing_banner_for_codex_exactly.png",
       "stock": null,
       "features": [
